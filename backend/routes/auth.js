@@ -1,7 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const User = require("../models/User");
+const User = require("../models/user");
 const authMiddleware = require("../middleware/authMiddleware");
 const router = express.Router();
 
@@ -35,7 +35,7 @@ router.post("/login", async (req, res) => {
 });
 
 router.get("/profile", authMiddleware, async (req, res) => {
-  res.message = "Authentication is Successful";
+  res.json({message: "Authentication is Successful" }) ;
 });
 
 module.exports = router;
