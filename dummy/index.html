@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form id="brandForm">
+      <h1>Please enter Brand name</h1>
+      <input type="text" id="brandName" placeholder="Enter brand name" />
+      <input type="text" id="ProductName" placeholder="Enter product name" />
+      <button id="submitBtn">Submit</button>
+    </form>
+    <script>
+      document
+        .getElementById("brandForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault(); // Prevent default form submission
+          onSubmitBrand();
+        });
+
+      async function onSubmitBrand() {
+        const brandName = document.getElementById("brandName").value;
+        const productName = document.getElementById("ProductName").value;
+        console.log(brandName);
+        try {
+          const response = await fetch(
+            `http://localhost:5010/api/trail?brand=${brandName}&product=${productName}`,
+            {
+              // Replace with your actual API endpoint
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                authorization:
+                  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZmU1ZGFjMWRmZGI2NTQ1NzhlNmYzOSIsImlhdCI6MTc0NDgwMzEzNCwiZXhwIjoxNzQ0ODA2NzM0fQ.NkizIYvm_egvKDLaVizDqi4GwlBdQQBq6kctKLAiJEA",
+              },
+            }
+          );
+
+          if (response.ok) {
+            const data = await response.json();
+            console.log("Success:", data);
+            // Handle success (e.g., display a message)
+          } else {
+            console.error("Error:", response.status);
+            // Handle error (e.g., display an error message)
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          // Handle network errors
+        }
+      }
+    </script>
+  </body>
+</html>

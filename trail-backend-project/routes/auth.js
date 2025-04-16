@@ -28,6 +28,7 @@ router.post("/login", async (req, res) => {
   if (!isMatch) {
     return res.status(400).json({ message: "Invalid credentials" });
   }
+  console.log(process.env.JWT_SECRET);
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
     expiresIn: "1h",
   });
@@ -35,7 +36,32 @@ router.post("/login", async (req, res) => {
 });
 
 router.get("/profile", authMiddleware, async (req, res) => {
-  res.message = "Authentication is Successful";
+  res.json(req.user.id);
+});
+
+router.get("/test/:username", authMiddleware, async (req, res) => {
+  console.log("Inside test route");
+  res.json({ message: "Test route accessed" });
+  console.log(req.params.username);
+});
+
+router.get("/test", authMiddleware, async (req, res) => {
+  console.log("Inside test route");
+  res.json({ message: "Test route accessed" });
+  console.log(req.query);
+  console.log(req.query.search);
+  console.log(req.query.username);
+});
+
+router.get("/trail/:blogId", authMiddleware, async (req, res) => {
+  console.log("blogId: ", req.params.blogId);
+  res.json({ message: "Trail route accessed" });
 });
 
 module.exports = router;
+
+router.get("/trail", authMiddleware, async (req, res) => {
+  console.log("Query test chesthunnam");
+  console.log(req.query);
+  res.json({ message: "Query testing" });
+});

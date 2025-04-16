@@ -2,11 +2,13 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const authRoutes = require("./routes/auth");
+const cors = require("cors");
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 mongoose
   .connect(process.env.MONGO_URI)
@@ -19,6 +21,6 @@ mongoose
 
 app.use("/api", authRoutes);
 
-app.listen(5000, () => {
-  console.log("Server is running on port 5000");
+app.listen(5010, () => {
+  console.log("Server is running on port 5010");
 });
